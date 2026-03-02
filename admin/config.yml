@@ -1,1 +1,34 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "writing"
+    label: "Writing"
+    folder: "_posts/writing"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "select", options: ["Theo", "Steph"] }
+      - { label: "Category", name: "category", widget: "select", options: ["Ramblings", "Opinion"] }
+      - { label: "Excerpt", name: "excerpt", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "_posts/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author", name: "author", widget: "select", options: ["Theo", "Steph", "Theo & Steph"] }
+      - { label: "Category", name: "category", widget: "select", options: ["Personal", "Professional", "Creative"] }
+      - { label: "Status", name: "status", widget: "select", options: ["Ongoing", "Completed"] }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Link", name: "link", widget: "string", required: false }
 
