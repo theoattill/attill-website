@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Attill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8f8f6; --ink: #191917; --ink-muted: #5e5e58;
+      --ink-faint: #adadaa; --accent: #1a3a6b; --accent-hover: #0f2548;
+      --border: #ddddd8; --transition: 0.25s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #111113; --ink: #e6e6e0; --ink-muted: #8f8f90;
+      --ink-faint: #46464a; --accent: #6b9fd4; --accent-hover: #89b5e3;
+      --border: #2a2a2e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      line-height: 1.75; transition: background var(--transition), color var(--transition);
+      min-height: 100vh;
+    }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Nav */
+    nav { border-bottom: 1px solid var(--border); transition: border-color var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 0; }
+    .nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.45rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-logo:hover { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-family: 'EB Garamond', serif; font-size: 1rem; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    #themeToggle { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); flex-shrink: 0; transition: border-color var(--transition), color var(--transition); }
+    #themeToggle:hover { color: var(--ink); }
+    #themeToggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Page header */
+    .page-header { padding: 5rem 0 4rem; border-bottom: 1px solid var(--border); transition: border-color var(--transition); animation: fadeUp 0.55s ease both; }
+    .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.8rem, 8vw, 5.25rem); font-weight: 500; line-height: 1.08; letter-spacing: -0.01em; }
+    .page-title em { font-style: italic; color: var(--accent); }
+
+    /* Family members */
+    .section { padding: 3.5rem 0; }
+    .section-label { font-family: 'EB Garamond', serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2.25rem; }
+
+    .member-list { list-style: none; }
+    .member-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      align-items: center;
+      gap: 0 1.5rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: border-color var(--transition);
+      animation: fadeUp 0.5s ease both;
+      text-decoration: none;
+    }
+    .member-item:first-child { border-top: 1px solid var(--border); }
+    .member-item:nth-child(1) { animation-delay: 0.08s; }
+    .member-item:nth-child(2) { animation-delay: 0.13s; }
+    .member-item:nth-child(3) { animation-delay: 0.18s; }
+
+    /* Photo circle */
+    .member-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--border);
+      overflow: hidden; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--ink-muted);
+      transition: background var(--transition);
+    }
+    .member-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .member-info {}
+    .member-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 500; color: var(--ink); transition: color var(--transition); }
+    .member-item:hover .member-name { color: var(--accent); }
+    .member-role { font-family: 'EB Garamond', serif; font-size: 0.88rem; color: var(--ink-faint); margin-top: 0.1rem; }
+
+    .member-arrow { font-size: 1rem; color: var(--ink-faint); transition: color var(--transition), transform var(--transition); }
+    .member-item:hover .member-arrow { color: var(--accent); transform: translateX(3px); }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; transition: border-color var(--transition); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .footer-copy { font-family: 'EB Garamond', serif; font-size: 0.85rem; color: var(--ink-faint); }
+    .footer-copy a { color: var(--ink-muted); text-decoration: none; transition: color var(--transition); }
+    .footer-copy a:hover { color: var(--ink); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 520px) {
+      .member-item { grid-template-columns: 56px 1fr auto; }
+      .nav-links { gap: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">Attill</a>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="/writing">Writing</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/about" class="active">About</a></li>
+          </ul>
+          <button id="themeToggle" aria-label="Toggle theme">
+            <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <header class="page-header">
+        <h1 class="page-title"><em>About.</em></h1>
+      </header>
+
+      <section class="section">
+        <p class="section-label">Members</p>
+        <ul class="member-list">
+
+          <li>
+            <a href="/about/theo" class="member-item">
+              <div class="member-avatar">T</div>
+              <div class="member-info">
+                <p class="member-name">Theo</p>
+                <p class="member-role">About</p>
+              </div>
+              <span class="member-arrow">→</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/about/steph" class="member-item">
+              <div class="member-avatar">S</div>
+              <div class="member-info">
+                <p class="member-name">Steph</p>
+                <p class="member-role">About</p>
+              </div>
+              <span class="member-arrow">→</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/about/meta" class="member-item">
+              <div class="member-avatar">M</div>
+              <div class="member-info">
+                <p class="member-name">Meta</p>
+                <p class="member-role">About</p>
+              </div>
+              <span class="member-arrow">→</span>
+            </a>
+          </li>
+
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">© 2025 Attill</span>
+        <span class="footer-copy"><a href="mailto:hello@attill.com">hello@attill.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    const sunIcon = document.getElementById('icon-sun');
+    const moonIcon = document.getElementById('icon-moon');
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('attill-theme', theme);
+      sunIcon.style.display = theme === 'dark' ? 'block' : 'none';
+      moonIcon.style.display = theme === 'dark' ? 'none' : 'block';
+    }
+    const saved = localStorage.getItem('attill-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  </script>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing — Attill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8f8f6; --ink: #191917; --ink-muted: #5e5e58;
+      --ink-faint: #adadaa; --accent: #1a3a6b; --accent-hover: #0f2548;
+      --border: #ddddd8; --transition: 0.25s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #111113; --ink: #e6e6e0; --ink-muted: #8f8f90;
+      --ink-faint: #46464a; --accent: #6b9fd4; --accent-hover: #89b5e3;
+      --border: #2a2a2e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; line-height: 1.75; transition: background var(--transition), color var(--transition); min-height: 100vh; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Nav */
+    nav { border-bottom: 1px solid var(--border); transition: border-color var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 0; }
+    .nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.45rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-logo:hover { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-family: 'EB Garamond', serif; font-size: 1rem; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    #themeToggle { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); flex-shrink: 0; transition: border-color var(--transition), color var(--transition); }
+    #themeToggle:hover { color: var(--ink); }
+    #themeToggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Page header */
+    .page-header { padding: 5rem 0 4rem; border-bottom: 1px solid var(--border); transition: border-color var(--transition); animation: fadeUp 0.55s ease both; }
+    .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.8rem, 8vw, 5.25rem); font-weight: 500; line-height: 1.08; letter-spacing: -0.01em; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-desc { font-size: 1.05rem; color: var(--ink-muted); margin-top: 1.5rem; max-width: 460px; line-height: 1.85; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 2rem 0 0;
+      flex-wrap: wrap;
+      animation: fadeUp 0.5s ease 0.06s both;
+    }
+    .filter-btn {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover { color: var(--ink); border-color: var(--ink-muted); }
+    .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+    /* Post groups */
+    .post-groups { padding: 3rem 0; }
+
+    .post-group { margin-bottom: 3.5rem; animation: fadeUp 0.5s ease both; }
+    .post-group:nth-child(1) { animation-delay: 0.08s; }
+    .post-group:nth-child(2) { animation-delay: 0.13s; }
+
+    .group-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+      transition: border-color var(--transition);
+    }
+
+    .post-list { list-style: none; }
+    .post-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 0 1.5rem;
+      align-items: baseline;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: border-color var(--transition), opacity 0.2s ease;
+    }
+    .post-item:first-child { border-top: 1px solid var(--border); }
+    .post-item.hidden { display: none; }
+
+    .post-date { font-family: 'EB Garamond', serif; font-size: 0.82rem; color: var(--ink-faint); }
+
+    .post-body {}
+    .post-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.45;
+      display: block;
+      transition: color var(--transition);
+    }
+    .post-title:hover { color: var(--accent); }
+    .post-excerpt { font-family: 'EB Garamond', serif; font-size: 0.92rem; color: var(--ink-muted); margin-top: 0.25rem; line-height: 1.65; }
+
+    /* Author + tag row */
+    .post-meta { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .post-author {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .post-author::before { content: '—'; margin-right: 0.4rem; }
+    .post-tag {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      padding: 0.1rem 0.45rem;
+      opacity: 0.7;
+    }
+
+    /* Empty state */
+    .empty-state { padding: 3rem 0; font-style: italic; color: var(--ink-faint); font-size: 0.95rem; display: none; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; transition: border-color var(--transition); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .footer-copy { font-family: 'EB Garamond', serif; font-size: 0.85rem; color: var(--ink-faint); }
+    .footer-copy a { color: var(--ink-muted); text-decoration: none; transition: color var(--transition); }
+    .footer-copy a:hover { color: var(--ink); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 520px) {
+      .post-item { grid-template-columns: 1fr; gap: 0.2rem; }
+      .post-date { order: 2; margin-top: 0.3rem; }
+      .nav-links { gap: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">Attill</a>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="/writing" class="active">Writing</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+          <button id="themeToggle" aria-label="Toggle theme">
+            <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <header class="page-header">
+        <h1 class="page-title"><em>Writing.</em></h1>
+        <p class="page-desc">Opinions and Travel from Theo and Steph — on life, family, and whatever we're thinking about.</p>
+      </header>
+
+      <!-- Filter buttons -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Travel">Travel</button>
+        <button class="filter-btn" data-filter="opinion">Opinion</button>
+        <button class="filter-btn" data-filter="theo">Theo</button>
+        <button class="filter-btn" data-filter="steph">Steph</button>
+      </div>
+
+      <!--
+        ╔═══════════════════════════════════════════════════════════════╗
+        ║  HOW TO ADD A NEW POST:                                       ║
+        ║  Copy a <li class="post-item"> block and update:             ║
+        ║    data-tags  — space-separated: "Travel theo" or            ║
+        ║                 "opinion steph" etc.                          ║
+        ║    post-date  — the display date                              ║
+        ║    post-title — your post title (update href when published)  ║
+        ║    post-excerpt — a one-sentence summary                      ║
+        ║    post-author — Theo or Steph                                ║
+        ║    post-tag   — Travel or Opinion                             ║
+        ╚═══════════════════════════════════════════════════════════════╝
+      -->
+
+      <div class="post-groups">
+
+        <!-- Ramblings -->
+        <div class="post-group" data-group="Travel">
+          <p class="group-title">Travel</p>
+          <ul class="post-list">
+
+            <li class="post-item" data-tags="Travel theo">
+              <time class="post-date" datetime="2025-03-01">Mar 2025</time>
+              <div class="post-body">
+                <a href="#" class="post-title">How we chose our new surname</a>
+                <p class="post-excerpt">Blending two names into one felt like the right way to mark a new chapter together.</p>
+                <div class="post-meta">
+                  <span class="post-author">Theo</span>
+                  <span class="post-tag">Travel</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="post-item" data-tags="Travel steph">
+              <time class="post-date" datetime="2025-02-14">Feb 2025</time>
+              <div class="post-body">
+                <a href="#" class="post-title">Notes from our first week in the new place</a>
+                <p class="post-excerpt">Boxes, flat-pack furniture, and the strange joy of a blank slate.</p>
+                <div class="post-meta">
+                  <span class="post-author">Steph</span>
+                  <span class="post-tag">Travel</span>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <!-- Opinion -->
+        <div class="post-group" data-group="opinion">
+          <p class="group-title">Opinion</p>
+          <ul class="post-list">
+
+            <li class="post-item" data-tags="opinion theo">
+              <time class="post-date" datetime="2025-01-20">Jan 2025</time>
+              <div class="post-body">
+                <a href="#" class="post-title">A post title will go here</a>
+                <p class="post-excerpt">A short description of what the post is about — just a sentence or two.</p>
+                <div class="post-meta">
+                  <span class="post-author">Theo</span>
+                  <span class="post-tag">Opinion</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="post-item" data-tags="opinion steph">
+              <time class="post-date" datetime="2025-01-05">Jan 2025</time>
+              <div class="post-body">
+                <a href="#" class="post-title">Another post title goes here</a>
+                <p class="post-excerpt">A short description of what this post is about — just a sentence or two.</p>
+                <div class="post-meta">
+                  <span class="post-author">Steph</span>
+                  <span class="post-tag">Opinion</span>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <p class="empty-state" id="emptyState">No posts found for this filter.</p>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">© 2025 Attill</span>
+        <span class="footer-copy"><a href="mailto:hello@attill.com">hello@attill.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    const sunIcon = document.getElementById('icon-sun');
+    const moonIcon = document.getElementById('icon-moon');
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('attill-theme', theme);
+      sunIcon.style.display = theme === 'dark' ? 'block' : 'none';
+      moonIcon.style.display = theme === 'dark' ? 'none' : 'block';
+    }
+    const saved = localStorage.getItem('attill-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    // Filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const postItems  = document.querySelectorAll('.post-item');
+    const groups     = document.querySelectorAll('.post-group');
+    const emptyState = document.getElementById('emptyState');
+
+    filterBtns.forEach(filterBtn => {
+      filterBtn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        filterBtn.classList.add('active');
+
+        const filter = filterBtn.dataset.filter;
+
+        postItems.forEach(item => {
+          const tags = item.dataset.tags || '';
+          item.classList.toggle('hidden', filter !== 'all' && !tags.includes(filter));
+        });
+
+        // Hide group headers if all posts in them are hidden
+        groups.forEach(group => {
+          const visible = [...group.querySelectorAll('.post-item')].some(i => !i.classList.contains('hidden'));
+          group.style.display = visible ? '' : 'none';
+        });
+
+        // Show empty state if nothing visible
+        const anyVisible = [...postItems].some(i => !i.classList.contains('hidden'));
+        emptyState.style.display = anyVisible ? 'none' : 'block';
+      });
+    });
+  </script>

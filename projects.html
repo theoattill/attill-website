@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Attill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8f8f6; --ink: #191917; --ink-muted: #5e5e58;
+      --ink-faint: #adadaa; --accent: #1a3a6b; --accent-hover: #0f2548;
+      --border: #ddddd8; --transition: 0.25s ease;
+      --card-bg: #f0efea;
+    }
+    [data-theme="dark"] {
+      --bg: #111113; --ink: #e6e6e0; --ink-muted: #8f8f90;
+      --ink-faint: #46464a; --accent: #6b9fd4; --accent-hover: #89b5e3;
+      --border: #2a2a2e; --card-bg: #1a1a1e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; line-height: 1.75; transition: background var(--transition), color var(--transition); min-height: 100vh; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Nav */
+    nav { border-bottom: 1px solid var(--border); transition: border-color var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 0; }
+    .nav-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1.45rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-logo:hover { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-family: 'EB Garamond', serif; font-size: 1rem; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    #themeToggle { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); flex-shrink: 0; transition: border-color var(--transition), color var(--transition); }
+    #themeToggle:hover { color: var(--ink); }
+    #themeToggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Page header */
+    .page-header { padding: 5rem 0 4rem; border-bottom: 1px solid var(--border); transition: border-color var(--transition); animation: fadeUp 0.55s ease both; }
+    .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.8rem, 8vw, 5.25rem); font-weight: 500; line-height: 1.08; letter-spacing: -0.01em; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-desc { font-size: 1.05rem; color: var(--ink-muted); margin-top: 1.5rem; max-width: 460px; line-height: 1.85; }
+
+    /* Filter bar */
+    .filter-bar { display: flex; align-items: center; gap: 0.6rem; padding: 2rem 0 0; flex-wrap: wrap; animation: fadeUp 0.5s ease 0.06s both; }
+    .filter-btn { font-family: 'EB Garamond', serif; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 3px; border: 1px solid var(--border); background: none; color: var(--ink-muted); cursor: pointer; transition: all var(--transition); }
+    .filter-btn:hover { color: var(--ink); border-color: var(--ink-muted); }
+    .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+    /* Cards grid */
+    .cards-section { padding: 3rem 0; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: border-color var(--transition), background var(--transition), transform 0.2s ease;
+      animation: fadeUp 0.5s ease both;
+      cursor: pointer;
+    }
+    .card:hover { border-color: var(--ink-muted); transform: translateY(-2px); }
+    .card.hidden { display: none; }
+
+    .card:nth-child(1) { animation-delay: 0.08s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.16s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card:nth-child(5) { animation-delay: 0.24s; }
+    .card:nth-child(6) { animation-delay: 0.28s; }
+
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+
+    .card-tag {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      padding: 0.1rem 0.4rem;
+      opacity: 0.75;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-status {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .card-status.ongoing { color: #5a8a5a; }
+    [data-theme="dark"] .card-status.ongoing { color: #7ab87a; }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.35;
+      transition: color var(--transition);
+    }
+    .card:hover .card-title { color: var(--accent); }
+
+    .card-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      transition: border-color var(--transition);
+    }
+    .card-author {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .card-link {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .card-link:hover { color: var(--accent-hover); }
+
+    /* Empty state */
+    .empty-state { padding: 3rem 0; font-style: italic; color: var(--ink-faint); font-size: 0.95rem; display: none; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; transition: border-color var(--transition); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .footer-copy { font-family: 'EB Garamond', serif; font-size: 0.85rem; color: var(--ink-faint); }
+    .footer-copy a { color: var(--ink-muted); text-decoration: none; transition: color var(--transition); }
+    .footer-copy a:hover { color: var(--ink); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 520px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">Attill</a>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="/writing">Writing</a></li>
+            <li><a href="/projects" class="active">Projects</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+          <button id="themeToggle" aria-label="Toggle theme">
+            <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg id="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+
+      <header class="page-header">
+        <h1 class="page-title"><em>Projects.</em></h1>
+        <p class="page-desc">Things we're making, building, and working on — personal, professional, and creative.</p>
+      </header>
+
+      <!-- Filter buttons -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="personal">Personal</button>
+        <button class="filter-btn" data-filter="professional">Professional</button>
+        <button class="filter-btn" data-filter="creative">Creative</button>
+        <button class="filter-btn" data-filter="theo">Theo</button>
+        <button class="filter-btn" data-filter="steph">Steph</button>
+      </div>
+
+      <!--
+        ╔═══════════════════════════════════════════════════════════════╗
+        ║  HOW TO ADD A NEW PROJECT:                                    ║
+        ║  Copy a <div class="card"> block and update:                  ║
+        ║    data-tags   — e.g. "personal theo" or "creative steph"     ║
+        ║    card-tag    — Personal / Professional / Creative            ║
+        ║    card-status — "Ongoing" or "Completed"                     ║
+        ║    card-title  — your project name                            ║
+        ║    card-desc   — a sentence or two about the project          ║
+        ║    card-author — Theo or Steph (or Theo & Steph)              ║
+        ║    card-link   — a URL if the project is published online     ║
+        ╚═══════════════════════════════════════════════════════════════╝
+      -->
+
+      <section class="cards-section">
+        <div class="cards-grid" id="cardsGrid">
+
+          <div class="card" data-tags="personal theo">
+            <div class="card-header">
+              <span class="card-tag">Personal</span>
+              <span class="card-status ongoing">Ongoing</span>
+            </div>
+            <p class="card-title">Your project title here</p>
+            <p class="card-desc">A sentence or two describing what this project is, what you're working on, and why it matters to you.</p>
+            <div class="card-footer">
+              <span class="card-author">Theo</span>
+              <a href="#" class="card-link">View →</a>
+            </div>
+          </div>
+
+          <div class="card" data-tags="creative steph">
+            <div class="card-header">
+              <span class="card-tag">Creative</span>
+              <span class="card-status ongoing">Ongoing</span>
+            </div>
+            <p class="card-title">Another project title</p>
+            <p class="card-desc">A sentence or two describing what this project is, what you're working on, and why it matters to you.</p>
+            <div class="card-footer">
+              <span class="card-author">Steph</span>
+              <a href="#" class="card-link">View →</a>
+            </div>
+          </div>
+
+          <div class="card" data-tags="professional theo">
+            <div class="card-header">
+              <span class="card-tag">Professional</span>
+              <span class="card-status">Completed</span>
+            </div>
+            <p class="card-title">A professional project</p>
+            <p class="card-desc">A sentence or two describing what this project is and what you achieved or built.</p>
+            <div class="card-footer">
+              <span class="card-author">Theo</span>
+              <a href="#" class="card-link">View →</a>
+            </div>
+          </div>
+
+          <div class="card" data-tags="creative personal steph">
+            <div class="card-header">
+              <span class="card-tag">Creative</span>
+              <span class="card-status">Completed</span>
+            </div>
+            <p class="card-title">A creative project</p>
+            <p class="card-desc">A sentence or two about this creative project — what it is, what form it took, where it ended up.</p>
+            <div class="card-footer">
+              <span class="card-author">Steph</span>
+              <a href="#" class="card-link">View →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="empty-state" id="emptyState">No projects found for this filter.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">© 2025 Attill</span>
+        <span class="footer-copy"><a href="mailto:hello@attill.com">hello@attill.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    const sunIcon = document.getElementById('icon-sun');
+    const moonIcon = document.getElementById('icon-moon');
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('attill-theme', theme);
+      sunIcon.style.display = theme === 'dark' ? 'block' : 'none';
+      moonIcon.style.display = theme === 'dark' ? 'none' : 'block';
+    }
+    const saved = localStorage.getItem('attill-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(saved || (prefersDark ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', () => setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    // Filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+    const emptyState = document.getElementById('emptyState');
+
+    filterBtns.forEach(filterBtn => {
+      filterBtn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        filterBtn.classList.add('active');
+        const filter = filterBtn.dataset.filter;
+        cards.forEach(card => {
+          const tags = card.dataset.tags || '';
+          card.classList.toggle('hidden', filter !== 'all' && !tags.includes(filter));
+        });
+        const anyVisible = [...cards].some(c => !c.classList.contains('hidden'));
+        emptyState.style.display = anyVisible ? 'none' : 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
