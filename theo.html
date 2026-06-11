@@ -49,7 +49,7 @@
 
     /* About */
     .about-section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); transition: border-color var(--transition); animation: fadeUp 0.5s ease 0.08s both; }
-    .about-grid { display: grid; grid-template-columns: 160px 1fr; gap: 0 3rem; align-items: start; }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 0 3rem; align-items: start; }
     .about-photo { width: 160px; height: 200px; border-radius: 4px; background: var(--border); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: background var(--transition); }
     .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .photo-placeholder { font-family: 'EB Garamond', serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); text-align: center; padding: 1rem; line-height: 1.6; }
@@ -126,23 +126,20 @@
 
       <section class="about-section">
         <div class="about-grid">
+          <!-- To add a photo later: restore this div and change .about-grid back to "160px 1fr"
           <div class="about-photo">
-            <div class="photo-placeholder">Your photo here</div>
-            <!-- <img src="/images/theo.jpg" alt="Theo Attill" /> -->
+            <img src="/images/theo.jpg" alt="Theo Attill" />
           </div>
+          -->
           <div>
-            <p class="about-location">📍 Your location</p>
+            <p class="about-location">&#128205; Melbourne, Australia</p>
             <div class="about-body">
-              <!--
-                ╔══════════════════════════════════════════════╗
-                ║  YOUR BIO GOES HERE                          ║
-                ╚══════════════════════════════════════════════╝
-              -->
-              <p>Write a short introduction about yourself here. A paragraph or two works well — who you are, what you do, what you care about.</p>
-              <p>You can add a second paragraph here if you'd like a little more space to say something.</p>
+              <p>I&rsquo;m a Melbourne-based sales and customer service professional, currently at Zarkie, a specialist retailer of heated clothing and motorcycle gear, where I look after everything from frontline customer service to order operations and the odd workflow automation.</p>
+              <p>Before that I spent several years in financial services &mdash; settling commercial loans at Liberty Financial and handling escalated enquiries at Computershare &mdash; after studying International Business at Copenhagen Business School. I completed Google&rsquo;s Cybersecurity Professional Certificate in 2023, speak passable Danish and middling French, and have lived in Edinburgh, Copenhagen and (since 2013) Melbourne.</p>
+              <p>Away from work: parenting, hiking, cooking, an ever-evolving home cinema project, and reading &mdash; these days mostly business books with some Russian literature mixed in.</p>
             </div>
             <div class="about-contact">
-              <a href="mailto:hello@attill.com" class="contact-link">hello@attill.com</a>
+              <span class="contact-link">my first name @ attill.com</span>
             </div>
           </div>
         </div>
